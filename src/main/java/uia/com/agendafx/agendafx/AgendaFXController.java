@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 
 public class AgendaFXController implements Initializable {
 
+    // Contact references
     @FXML private TableView<Contacto> table;
     @FXML private TableColumn<Contacto, String> tipo;
     @FXML private TableColumn<Contacto, String> nombre;
@@ -29,14 +30,40 @@ public class AgendaFXController implements Initializable {
     @FXML
     private Label fechaRecordatorioLabel;
 
+
+    // Event references
+    @FXML private TableView<Evento> tableEvento;
+    @FXML private TableColumn<Evento, String> tipoEvento;
+    @FXML private TableColumn<Evento, String> nombreEvento;
+    @FXML private TableColumn<Evento, String> fechaRecordatorioEvento;
+    @FXML private TableColumn<Evento, String> fechaEvento;
+    @FXML
+    private Label tipoLabelEvento;
+    @FXML
+    private Label nombreLabelEvento;
+    @FXML
+    private Label fechaLabelEvento;
+    @FXML
+    private Label fechaRecordatorioLabelEvento;
+
+
     // Reference to the main application.
     private AgendaFXApplication mainApp;
 
+    // Default contacts
     public ObservableList<Contacto> list = FXCollections.observableArrayList(
             new Contacto("1", "Nava", "1-11-2020", "1-10-2020"),
             new Contacto("2",  "Fahim", "1-12-2021", "1-10-2020"),
             new Contacto("3",  "Shariful", "3-10-2022", "1-10-2020"),
             new Contacto("4",  "Alfonso", "3-10-2022", "1-10-2020")
+    );
+
+    // Default events
+    public ObservableList<Evento> listEvento = FXCollections.observableArrayList(
+            new Evento("1", "Evento Prueba 1", "24-12-2022", "24-12-2022"),
+            new Evento("2",  "Evento Prueba 2", "24-12-2022", "24-12-2022"),
+            new Evento("3",  "Evento Prueba 3", "01-01-2023", "01-01-2023"),
+            new Evento("4",  "Evento Prueba 4", "02-01-2023", "02-01-2023")
     );
 
     @Override
