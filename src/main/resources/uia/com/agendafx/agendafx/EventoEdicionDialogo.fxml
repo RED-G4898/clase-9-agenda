@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="uia.com.agendafx.agendafx.ContactoEdicionDialogoController">
+            fx:controller="uia.com.agendafx.agendafx.EventoEdicionDialogoController">
     <children>
         <GridPane layoutX="8.0" layoutY="13.0" prefHeight="287.0" prefWidth="591.0">
             <columnConstraints>
@@ -27,15 +27,18 @@
                 <Label text="Nombre" GridPane.rowIndex="1"/>
                 <Label text="Fecha " GridPane.rowIndex="2"/>
                 <Label text="Fecha Recordatorio" GridPane.rowIndex="3"/>
-                <TextField fx:id="tipoField" onAction="#handleOk" prefHeight="27.0" prefWidth="339.0"
+                <TextField fx:id="tipoFieldEvento" onAction="#handleOkEvento" prefHeight="27.0" prefWidth="339.0"
                            GridPane.columnIndex="1"/>
-                <TextField fx:id="nombreField" onAction="#handleOk" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                <TextField fx:id="fechaField" onAction="#handleOk" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                <TextField fx:id="fechaRecordatorioField" onAction="#handleOk" GridPane.columnIndex="1"
+                <TextField fx:id="nombreFieldEvento" onAction="#handleOkEvento" GridPane.columnIndex="1"
+                           GridPane.rowIndex="1"/>
+                <TextField fx:id="fechaFieldEvento" onAction="#handleOkEvento" GridPane.columnIndex="1"
+                           GridPane.rowIndex="2"/>
+                <TextField fx:id="fechaRecordatorioFieldEvento" onAction="#handleOkEvento" GridPane.columnIndex="1"
                            GridPane.rowIndex="3"/>
             </children>
         </GridPane>
-        <Button fx:id="okBoton" layoutX="115.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleOk" text="Ok"/>
+        <Button fx:id="okBoton" layoutX="115.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleOkEvento"
+                text="Ok"/>
         <Button layoutX="343.0" layoutY="341.0" mnemonicParsing="false" text="Cancel"/>
     </children>
 </AnchorPane>

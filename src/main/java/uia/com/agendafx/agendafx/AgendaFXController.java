@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 
 public class AgendaFXController implements Initializable {
 
-    // Contact references
+    // Contact reference
     @FXML private TableView<Contacto> table;
     @FXML private TableColumn<Contacto, String> tipo;
     @FXML private TableColumn<Contacto, String> nombre;
@@ -30,8 +30,7 @@ public class AgendaFXController implements Initializable {
     @FXML
     private Label fechaRecordatorioLabel;
 
-
-    // Event references
+    // Event reference
     @FXML private TableView<Evento> tableEvento;
     @FXML private TableColumn<Evento, String> tipoEvento;
     @FXML private TableColumn<Evento, String> nombreEvento;
@@ -46,11 +45,10 @@ public class AgendaFXController implements Initializable {
     @FXML
     private Label fechaRecordatorioLabelEvento;
 
-
     // Reference to the main application.
     private AgendaFXApplication mainApp;
 
-    // Default contacts
+    // Default contact list data
     public ObservableList<Contacto> list = FXCollections.observableArrayList(
             new Contacto("1", "Nava", "1-11-2020", "1-10-2020"),
             new Contacto("2",  "Fahim", "1-12-2021", "1-10-2020"),
@@ -58,12 +56,12 @@ public class AgendaFXController implements Initializable {
             new Contacto("4",  "Alfonso", "3-10-2022", "1-10-2020")
     );
 
-    // Default events
+    // Default event list data
     public ObservableList<Evento> listEvento = FXCollections.observableArrayList(
-            new Evento("1", "Evento Prueba 1", "24-12-2022", "24-12-2022"),
-            new Evento("2",  "Evento Prueba 2", "24-12-2022", "24-12-2022"),
-            new Evento("3",  "Evento Prueba 3", "01-01-2023", "01-01-2023"),
-            new Evento("4",  "Evento Prueba 4", "02-01-2023", "02-01-2023")
+            new Evento("1", "Noche Buena", "24-12-2022", "24-12-2022"),
+            new Evento("2",  "Navidad", "25-12-2022", "25-12-2022"),
+            new Evento("3",  "Cena de año nuevo", "31-12-2022", "31-12-2022"),
+            new Evento("4",  "Año nuevo", "01-01-2023", "01-01-2023")
     );
 
     @Override
@@ -74,12 +72,23 @@ public class AgendaFXController implements Initializable {
         fecha.setCellValueFactory(new PropertyValueFactory<Contacto, String>("fecha"));
         table.setItems(list);
 
+        tipoEvento.setCellValueFactory(new PropertyValueFactory<Evento, String>("tipoEvento"));
+        nombreEvento.setCellValueFactory(new PropertyValueFactory<Evento, String>("nombreEvento"));
+        fechaRecordatorioEvento.setCellValueFactory(new PropertyValueFactory<Evento, String>("fechaRecordatorioEvento"));
+        fechaEvento.setCellValueFactory(new PropertyValueFactory<Evento, String>("fechaEvento"));
+        tableEvento.setItems(listEvento);
+
         // Clear person details.
         showContactoDetails(null);
+        showEventoDetails(null);
 
         // Listen for selection changes and show the person details when changed.
         table.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showContactoDetails(newValue));
+
+        tableEvento.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> showEventoDetails(newValue));
+
     }
 
     /**
@@ -92,9 +101,8 @@ public class AgendaFXController implements Initializable {
 
         // Add observable list data to the table
         table.setItems(list);
+        tableEvento.setItems(listEvento);
     }
-
-
 
 
     private void showContactoDetails(Contacto contacto) {
@@ -113,7 +121,22 @@ public class AgendaFXController implements Initializable {
         }
     }
 
+    private void showEventoDetails(Evento evento) {
+        if (evento != null) {
+            tipoLabelEvento.setText(evento.getTipoEvento());
+            nombreLabelEvento.setText(evento.getNombreEvento());
+            fechaRecordatorioLabelEvento.setText(evento.getFechaRecordatorioEvento());
+            fechaLabelEvento.setText(evento.getFechaEvento());
+        } else {
+            tipoLabelEvento.setText("");
+            nombreLabelEvento.setText("");
+            fechaRecordatorioLabelEvento.setText("");
+            fechaLabelEvento.setText("");
+        }
+    }
 
+    // Handlers
+    // New object
     /**
      * Called when the user clicks the new button. Opens a dialog to edit
      * details for a new person.
@@ -126,6 +149,17 @@ public class AgendaFXController implements Initializable {
             list.add(tempContacto);
         }
     }
+
+    @FXML
+    private void handleNewEvento() {
+        Evento tempEvento = new Evento();
+        boolean okClicked = mainApp.showEventoEdicionDialogo(tempEvento);
+        if (okClicked) {
+            listEvento.add(tempEvento);
+        }
+    }
+
+    // Edit object
 
     /**
      * Called when the user clicks the edit button. Opens a dialog to edit
@@ -151,6 +185,4 @@ public class AgendaFXController implements Initializable {
             alert.showAndWait();
         }
     }
-
-
 }

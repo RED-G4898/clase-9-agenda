@@ -96,17 +96,17 @@ public class EventoEdicionDialogoController {
         String errorMessageEvento = "";
 
         if (tipoFieldEvento.getText() == null || tipoFieldEvento.getText().length() == 0) {
-            errorMessageEvento += "No valid first name!\n";
+            errorMessageEvento += "Tipo de evento invalido!\n";
         }
         if (nombreFieldEvento.getText() == null || nombreFieldEvento.getText().length() == 0) {
-            errorMessageEvento += "No valid last name!\n";
+            errorMessageEvento += "Nombre invalido!\n";
         }
         if (fechaFieldEvento.getText() == null || fechaFieldEvento.getText().length() == 0) {
-            errorMessageEvento += "No valid fecha!\n";
+            errorMessageEvento += "Fecha Invalida!\n";
         }
 
         if (fechaRecordatorioFieldEvento.getText() == null || fechaRecordatorioFieldEvento.getText().length() == 0) {
-            errorMessageEvento += "No valid postal code!\n";
+            errorMessageEvento += "Fecha de recordatorio invalida\n";
         }
 
         if (errorMessageEvento.length() == 0) {
@@ -115,13 +115,14 @@ public class EventoEdicionDialogoController {
             // Show the error message.
             Alert alert = new Alert(AlertType.ERROR);
             alert.initOwner(dialogStageEvento);
-            alert.setTitle("Invalid Fields");
-            alert.setHeaderText("Please correct invalid fields");
+            alert.setTitle("Campos Invalidos");
+            alert.setHeaderText("Corriga los campos invalidos");
             alert.setContentText(errorMessageEvento);
 
             alert.showAndWait();
 
             return false;
         }
+
     }
 }

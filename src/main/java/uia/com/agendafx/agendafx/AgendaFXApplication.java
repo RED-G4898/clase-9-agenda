@@ -19,13 +19,16 @@ public class AgendaFXApplication extends Application {
     public  Window getPrimaryStage() {
         return this.primaryStage;
     }
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Agenda");
         initLayoutRaiz();
         showContactoOverview();
+        showEventoOverview();
     }
+
     /**
      * Initializes the root layout.
      */
@@ -45,8 +48,6 @@ public class AgendaFXApplication extends Application {
         }
     }
 
-
-
     /**
      * Opens a dialog to edit details for the specified person. If the user
      * clicks OK, the changes are saved into the provided person object and true
@@ -63,7 +64,7 @@ public class AgendaFXApplication extends Application {
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edición de Contacto");
+            dialogStage.setTitle("Editar Contacto");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
@@ -84,7 +85,6 @@ public class AgendaFXApplication extends Application {
             return false;
         }
     }
-
 
     /**
      * Shows the contacto overview inside the root layout.
@@ -108,7 +108,53 @@ public class AgendaFXApplication extends Application {
         }
     }
 
+    public boolean showEventoEdicionDialogo(Evento newEvento) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loaderEvento = new FXMLLoader();
+            loaderEvento.setLocation(AgendaFXApplication.class.getResource("EventoEdicionDialogo.fxml"));
+            AnchorPane pageEvento = (AnchorPane) loaderEvento.load();
 
+            // Create the dialog Stage.
+            Stage dialogStageEvento = new Stage();
+            dialogStageEvento.setTitle("Editar Evento");
+            dialogStageEvento.initModality(Modality.WINDOW_MODAL);
+            dialogStageEvento.initOwner(primaryStage);
+            Scene sceneEvento = new Scene(pageEvento);
+            dialogStageEvento.setScene(sceneEvento);
+
+            // Set the newEvent into the controller.
+            EventoEdicionDialogoController controller = loaderEvento.getController();
+            controller.setDialogStageEvento(dialogStageEvento);
+            controller.setEvento(newEvento);
+
+            // Show the dialog and wait until the user closes it
+            dialogStageEvento.showAndWait();
+
+            return controller.isOkClickedEvento();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void showEventoOverview() {
+        try {
+            FXMLLoader loaderEvento = new FXMLLoader();
+            loaderEvento.setLocation(AgendaFXApplication.class.getResource("AgendaFX.fxml"));
+            AnchorPane eventoOverview = (AnchorPane) loaderEvento.load();
+
+            layoutRaiz.setCenter(eventoOverview);
+
+            // Give the controller access to the main app.
+            AgendaFXController controller = loaderEvento.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         launch();
